@@ -1,0 +1,19 @@
+.navbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: #41644A;
+}
+
+.navbar-links {
+    display: flex;
+    gap: 10px; /* Adjust the gap value as needed */
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #FFFFFF;
+    padding: 10px;
+    background-color: #41644A;
+    border-radius: 4px;
+}

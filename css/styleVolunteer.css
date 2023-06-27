@@ -1,0 +1,67 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  .row {
+    margin-left:-5px;
+    margin-right:-5px;
+  }
+    
+  .column {
+    float: left;
+    width: 50%;
+    padding: 5px;
+  }
+  
+  /* Clearfix (clear floats) */
+  .row::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+  input[type=submit] {
+    background-color: #61876E;
+    color: #D9D9D9;
+    border-radius: 5px;
+    border-color: #41644A; /* Update border-color */
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    }
+  input[type=submit]:hover {
+    color: #D9D9D9;
+    background-color: #41644A;
+    border-color: #41644A;
+  }
+  
+  table {
+    background-color: #41644A;
+    border-spacing: 0;
+    width: 100%;
+    border: 2px solid #41644A;
+    border-radius: 5px;
+  }
+  
+  th{
+    text-align: left;
+    padding: 16px;
+    color: white;
+  }
+  td {
+    text-align: left;
+    padding: 16px;
+    color: white;
+    background-color: #61876E;
+  }
+  
+  td:nth-child(even) {
+    background-color: #658A72;
+  }
+  
+  /* Responsive layout - makes the two columns stack on top of each other instead of next to each other on screens that are smaller than 600 px */
+  @media screen and (max-width: 600px) {
+    .column {
+      width: 100%;
+    }
+  }

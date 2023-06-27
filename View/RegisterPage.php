@@ -1,136 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>Register</title>
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <link rel="stylesheet" href="../css/all.min.css">
     <script src="path/to/your/font-awesome-folder/js/all.min.js"></script>
-
-    <title>Register</title>
-<style>
-    
-    body{
-        background-color: #3C6255;
-        font-family: 'Montserrat';
-        overflow: hidden;
-        margin: 0;
-        padding: 0;
-    }
-    h1{
-        color: white;
-        font-size: 46px;
-        font-style: normal;
-        font-weight: 700;
-    }
-    label{
-        color: white;
-        font-size: 20px;
-        font-style: normal;
-        font-weight: 700;
-    }
-    p{
-        color: white;
-        font-size: 15px;
-        font-style: normal;
-        font-weight: 700;
-    }
-    input[type=text],
-    input[type=password] {
-        font-size: 15px;
-        font-style: normal;
-        font-weight: 700;
-        width: 100%;
-        padding: 12px 20px;
-        margin: 8px 0;
-        border: none;
-        background-color: #61876E;
-        color: white;
-        border-bottom: 2px solid white;
-    }
-    .password-container {
-        position: relative;
-    }
-    .password-toggle {
-        position: absolute;
-        top: 50%;
-        right: 10px;
-        transform: translateY(-50%);
-        cursor: pointer;
-    }
-    .password-toggle i {
-        color: white;
-    }
-    
-    .submit-container {
-        text-align: center;
-    }
-    input[type=submit] {
-        font-size: 20px;
-        font-style: normal;
-        font-weight: 700;
-        width: 426px;
-        height: 69px;
-        background-color: white;
-        color: #3C6255;
-        border-radius: 30px;
-        border-color: transparent; /* Update border-color */
-        padding: 12px 20px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    input[type=submit]:hover {
-        color: white;
-        background-color: #3C6255;
-    }
-
-    *{
-    box-sizing: border-box;
-    }
-
-    /* Create a container with full height */
-    .container {
-        display: flex;
-        height: 100vh;
-    }
-
-    /* Create a row to contain columns */
-    .row {
-        display: flex;
-        flex: 1;
-    }
-
-    /* Adjust z-index */
-    .column {
-        position: relative;
-        flex: 1;
-        padding: 110px;
-        padding-top: 0px;
-        z-index: 1;
-    }
-    .error-message {
-        color: pink;
-        font-size: 16px;
-        margin-top: 5px;
-    }
-    .error-field {
-        border-bottom-color: red;
-    }
-    .image-container {
-        position: absolute; 
-        right: 26px; 
-        z-index: 2;
-    }
-    .login-section {
-        text-align: center;
-        color: white;
-        font-size: 16px;
-    }
-    
-    .login-section a {
-        color: white;
-        text-decoration: underline;
-    }
-    </style>
+    <link rel="stylesheet" href="../css/styleregister.css">
 </head>
 <body>
 <div class="container">
@@ -167,13 +42,13 @@
                     <input type="submit" value="Register">
                 </div>
                 <div class="login-section">
-                    <p>Already have an account? <a href='LoginPage.php';>Login</a></p>
+                    <p>Already have an account? <a href='../View/LoginPage.php';>Login</a></p>
                 </div>
             </form>
             </div>
             <div class="column">
                 <div class="image-container">
-                    <img src="../bg_regis.png" alt="Image" style="width:615.61px; height: 683px;">
+                    <img src='../image/bg_regis.png' alt="Image" style="width:615.61px; height: 683px;">
                 </div>
             </div>
         </div>
