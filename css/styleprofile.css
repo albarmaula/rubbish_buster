@@ -1,0 +1,71 @@
+/* styleprofile.css */
+
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  /* Profile Styles */
+  .profile {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 20px;
+  }
+  
+  .profile-photo {
+    flex: 0 0 200px;
+    margin-right: 20px;
+  }
+  
+  .profile-photo img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+  }
+  
+  .profile-form {
+    flex: 1;
+  }
+  
+  .profile-info {
+    margin-bottom: 20px;
+  }
+  
+  .profile-info label {
+    font-weight: bold;
+  }
+  
+  .profile-info p {
+    margin: 5px 0;
+  }
+  
+  .profile-form form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .profile-form label,
+  .profile-form input,
+  .profile-form textarea {
+    margin-bottom: 10px;
+  }
+  
+  .profile-form input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .profile-form input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  
