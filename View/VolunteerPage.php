@@ -11,7 +11,7 @@
         <?php include(__DIR__ . "/navbar.php"); ?>
     </div>
 
-    <h1 style="align-items: center;">Aktivitas sukarela</h1>
+    <h1 style="align-items: center;">Aktivitas Sukarela</h1>
     <p style="text-align: justify;"> "Pada halaman ini, anda dapat mendaftarkan diri dalam kegiatan pembersihan sampah rutinan kami 
         dengan menekan tombol 'Ikut' dan mengisi form pendaftaran. Dengan aktivitas ini, kami harap dapat 
         mewujudkan lingkungan yang bersih dan nyaman untuk ditinggali." - Admin

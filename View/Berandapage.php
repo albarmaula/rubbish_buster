@@ -32,7 +32,7 @@ if ($action === 'save') {
         display: flex;
         align-items: center;
         justify-content: center;
-        z-index: 9999;
+        z-index: 9998;
     }
 
     .popup-form {
@@ -58,6 +58,7 @@ if ($action === 'save') {
 
   <div class="body">
     <p>Rubbish Buster adalah sebuah konsep atau program yang bertujuan untuk mengurangi dan mengatasi masalah sampah atau limbah di suatu wilayah atau komunitas tertentu. Tujuan utama dari Rubbish Buster adalah untuk meningkatkan kesadaran dan partisipasi masyarakat dalam mengelola sampah dengan cara yang lebih bertanggung jawab dan berkelanjutan.</p>
+    <a class="btn_lapor" href="#" onclick="openFormVolunteer()">Volunteer</a>
     <a class="btn_lapor" href="#" onclick="openForm()">Lapor Sampah</a>
   </div>
   
@@ -119,15 +120,24 @@ if ($action === 'save') {
         <?php endforeach; ?>
 
         function openForm() {
-        document.getElementById("formOverlay").style.display = "flex";
-    }
+          document.getElementById("formOverlay").style.display = "flex";
+        }
 
-    function closeForm() {
-        document.getElementById("formOverlay").style.display = "none";
-    }
+        function closeForm() {
+            document.getElementById("formOverlay").style.display = "none";
+        }
+
+        function openFormVolunteer() {
+          document.getElementById("formVolOverlay").style.display = "flex";
+        }
+
+        function closeFormVolunteer() {
+            document.getElementById("formVolOverlay").style.display = "none";
+        }
 
     </script>
 
+<!-- Laporan Sampah______________________________________________________________________________________________ -->
   <div class="overlay" id="formOverlay" style="display: none;">
     <div class="popup-form">
         <h2>Laporan Sampah</h2>
@@ -241,10 +251,125 @@ if ($action === 'save') {
         }
     </script>
 
+<!-- Volunteer__________________________________________________________________________________________________________ -->
+    <div class="overlay" id="formVolOverlay" style="display: none;">
+        <div class="popup-form">
+            <h2>Aktivitas Pembersihan</h2>
+            <!-- Add your form fields here -->
+            <form class="form" action="Berandapage.php?action=save" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="address">Alamat Pembersihan:</label>
+                        <input type="text" id="address" name="address" required>
+                    </div>
 
+                    <div class="form-group">
+                        <label for="latitude">Latitude:</label>
+                        <input type="text" id="latitude" name="latitude" required>
+                    </div>
 
+                    <div class="form-group">
+                        <label for="longitude">Longitude:</label>
+                        <input type="text" id="longitude" name="longitude" required>
+                    </div>
 
-    
+                    <button class="btn" type="button" onclick="showMap()">Pilih Peta</button>
+
+                    <!-- ///////////////////////benakno -->
+                    <div class="form-group">
+                        <label for="address">Tanggal dan Jam:</label>
+                        <input type="text" id="address" name="address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Deskripsi:</label>
+                        <input type="text" id="address" name="address" required>
+                    </div>
+                    <!-- ///////////////////// -->
+
+                    <div class="form-group">
+                        <label for="photo">Foto:</label>
+                        <input type="file" id="photo" name="photo" accept="image/*">
+                    </div>
+
+                    <button class="btn" type="button" onclick="closeFormVolunteer()">Batal</button>
+                    <button class="btn" type="submit">Simpan</button>
+            </form>
+            </div>
+        </div>
+
+        <div id="map-popup" class="map-popup" style="display: none; ">
+            <div class="map-popup-content" style="background-color: #41644A;">
+                <div id="map-popup-map" class="map"></div><br>
+                <input type="text" id="search-input" placeholder="Search">
+                <button class="btn" onclick="searchLocation()">Search</button>
+                <button class="btn" onclick="closeMap()">Close</button>
+            </div>
+        </div>
+        <!-- <button onclick="showMap()">Open Map</button> -->
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+        <script>
+            var map;
+            var marker;
+            var mapPopup = document.getElementById('map-popup');
+            var searchInput = document.getElementById('search-input');
+
+            function showMap() {
+                mapPopup.style.display = 'block';
+
+                setTimeout(function() {
+                    map = L.map('map-popup-map').setView([-7.2575, 112.7521], 13);
+
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+                        maxZoom: 18
+                    }).addTo(map);
+
+                    map.on('click', function(event) {
+                        if (marker) {
+                            map.removeLayer(marker);
+                        }
+
+                        marker = L.marker(event.latlng).addTo(map);
+
+                        document.getElementById('latitude').value = event.latlng.lat.toFixed(6);
+                        document.getElementById('longitude').value = event.latlng.lng.toFixed(6);
+                    });
+                }, 100);
+            }
+
+            function closeMap() {
+                mapPopup.style.display = 'none';
+                map.remove();
+            }
+
+            function searchLocation() {
+                var query = searchInput.value;
+
+                if (query) {
+                    var url = 'https://nominatim.openstreetmap.org/search?q=' + query + '&format=json&addressdetails=1&limit=1';
+
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.length > 0) {
+                                var lat = data[0].lat;
+                                var lon = data[0].lon;
+
+                                if (marker) {
+                                    map.removeLayer(marker);
+                                }
+
+                                marker = L.marker([lat, lon]).addTo(map);
+                                map.setView([lat, lon], 13);
+                            }
+                        })
+                        .catch(error => {
+                            console.log('Error:', error);
+                        });
+                }
+            }
+        </script>
+
 </body>
 </html>
 
