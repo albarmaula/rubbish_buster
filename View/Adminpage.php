@@ -3,12 +3,37 @@
 <head>
     <title>Admin Page</title>
     <link rel="stylesheet" href="../css/styleadminpage.css">
+    <style>
+        table {
+            background-color: #41644A;
+            border-spacing: 0;
+            width: 100%;
+            border: 2px solid #41644A;
+            border-radius: 5px;
+        }
+        
+        th{
+            text-align: left;
+            padding: 16px;
+            color: white;
+        }
+        td {
+            text-align: left;
+            padding: 16px;
+            color: white;
+            background-color: #61876E;
+        }
+        
+        td:nth-child(even) {
+            background-color: #658A72;
+        }
+    </style>
 </head>
 <body>
     <div class="navbar">
         <?php include(__DIR__ . "/navbar.php"); ?>
     </div>
-    <h1>Admin Page</h1>
+    <h1>Admin</h1>
 
     <?php
     require_once '../Model/Location.php';
@@ -91,5 +116,11 @@
         echo '<p>Tidak ada lokasi ditemukan.</p>';
     }
     ?>
+
+<br>
+    <div class="footer">
+        <p>Hak Cipta &copy; 2023 Rubbish Buster. Semua hak dilindungi.</p>
+        <p>Kontak: info@rubbishbuster.com | Telepon: 0856-4849-9655</p>
+    </div>
 </body>
 </html>

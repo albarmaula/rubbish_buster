@@ -12,21 +12,21 @@
         <div class="row">
             <div class="column" style="background-color:#61876E;">
             <br><br>
-            <h1><center>Create an account</center></h1><br>
+            <h1><center>Buat akun</center></h1><br>
             
             <form method="POST" action="../Controller/UserController.php?action=register">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" required value="<?php echo isset($_POST['username']) ? $_POST['username'] : ''; ?>">
                 <?php if (isset($errors) && !empty($errors) && in_array("Username already exists", $errors)){
-                    echo '<span class="error-message">Username already exists</span>';
+                    echo '<span class="error-message">Username sudah ada!</span>';
                 } ?><br>
                 
                 <label for="email">Email</label>
                 <input type="text" id="email" name="email" required value="<?php echo isset($_POST['email']) ? $_POST['email'] : ''; ?>">
                 <?php if (isset($errors) && !empty($errors) && in_array("Invalid email format", $errors)) {
-                    echo '<span class="error-message">Invalid format</span>';
+                    echo '<span class="error-message">Format email salah!</span>';
                 }else if (isset($errors) && !empty($errors) && in_array("Email already exists", $errors)){
-                    echo '<span class="error-message">Email already exists</span>';
+                    echo '<span class="error-message">Email sudah ada!</span>';
                 } ?><br>
 
                 <label for="password">Password</label>
@@ -35,14 +35,14 @@
                     <span class="password-toggle" onclick="togglePasswordVisibility()"><i class="fa fa-eye"></i></span>
                 </div>
                 <?php if (isset($errors) && !empty($errors) && in_array("Invalid password format", $errors)) {
-                        echo '<span class="error-message">Password must contain at least 6 characters and 1 uppercase</span>';
+                        echo '<span class="error-message">Password harus mengandung setidaknya 6 karakter dan 1 huruf besar</span>';
                     }?>
                 <br><br><br>
                 <div class="submit-container">
-                    <input type="submit" value="Register">
+                    <input type="submit" value="Buat">
                 </div>
                 <div class="login-section">
-                    <p>Already have an account? <a href='../View/LoginPage.php';>Login</a></p>
+                    <p>Sudah punya akun? <a href='../View/LoginPage.php';>Login</a></p>
                 </div>
             </form>
             </div>
