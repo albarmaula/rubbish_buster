@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__ . "/../DB.php");
+require_once(__DIR__ . "/../Database/UserDB.php");
 
 class User{
     private $db;
@@ -77,6 +77,25 @@ class User{
             return $user;
         } else {
             return null; // Pengguna tidak ditemukan
+        }
+    }
+
+    public function updateUser($email, $username, $address, $phoneNum) {
+        // Lakukan koneksi ke database (misalnya menggunakan PDO atau mysqli)
+        $db = new DB(); // Contoh objek untuk koneksi database
+        $connection = $db->getConnection(); // Metode untuk mendapatkan koneksi
+
+        // Lakukan kueri update pada tabel pengguna
+        $query = "UPDATE user SET username = ?, address = ?, phone_num = ? WHERE email = ?";
+        $stmt = $connection->prepare($query);
+        $stmt->bind_param("ssss", $username, $address, $phoneNum, $email);
+        $result = $stmt->execute();
+
+        // Periksa apakah update berhasil
+        if ($result) {
+            return true; // Update berhasil
+        } else {
+            return false; // Update gagal
         }
     }
 

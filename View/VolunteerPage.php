@@ -11,11 +11,15 @@
         <?php include(__DIR__ . "/navbar.php"); ?>
     </div>
 
-    <h1>Activity Volunteer</h1>
+    <h1 style="align-items: center;">Aktivitas Sukarela</h1>
+    <p style="text-align: justify;"> "Pada halaman ini, anda dapat mendaftarkan diri dalam kegiatan pembersihan sampah rutinan kami 
+        dengan menekan tombol 'Ikut' dan mengisi form pendaftaran. Dengan aktivitas ini, kami harap dapat 
+        mewujudkan lingkungan yang bersih dan nyaman untuk ditinggali." - Admin
+    </p>
 
     <div class="row">
         <div class="column">
-            <h3>In Progress</h3>
+            <h3>Akan terjadi</h3>
             <table>
             <tr>
                 <th>ID</th>
@@ -23,7 +27,7 @@
                 <th>Tanggal</th>
                 <th>Jam</th>
                 <th>Detail</th>
-                <th>Join</th>
+                <th>Ikut</th>
             </tr>
             <tr>
                 <td>1</td>
@@ -32,28 +36,12 @@
                 <td>10.00</td>
                 <td>
                     <form name="f1" action="#" >
-                        <input id="detail" type="submit" name="Detail" value="See Detail">
+                        <input id="detail" type="submit" name="Detail" value="Lihat Detail">
                     </form>
                 </td>
                 <td>
                     <form name="f1" action="#" >
-                        <input id="join" type="submit" name="Join" value="Join">
-                    </form>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Jl. Demak No. 15 Surabaya</td>
-                <td>25 Juni 2023</td>
-                <td>10.00</td>
-                <td>
-                    <form name="f1" action="#" >
-                        <input id="detail" type="submit" name="Detail" value="See Detail">
-                    </form>
-                </td>
-                <td>
-                    <form name="f1" action="#" >
-                        <input id="join" type="submit" name="Join" value="Join">
+                        <input id="Ikut" type="submit" name="Ikut" value="Ikut">
                     </form>
                 </td>
             </tr>
@@ -64,12 +52,12 @@
                 <td>10.00</td>
                 <td>
                     <form name="f1" action="#" >
-                        <input id="detail" type="submit" name="Detail" value="See Detail">
+                        <input id="detail" type="submit" name="Detail" value="Lihat Detail">
                     </form>
                 </td>
                 <td>
                     <form name="f1" action="#" >
-                        <input id="join" type="submit" name="Join" value="Join">
+                        <input id="Ikut" type="submit" name="Ikut" value="Ikut">
                     </form>
                 </td>
             </tr>
@@ -80,19 +68,35 @@
                 <td>10.00</td>
                 <td>
                     <form name="f1" action="#" >
-                        <input id="detail" type="submit" name="Detail" value="See Detail">
+                        <input id="detail" type="submit" name="Detail" value="Lihat Detail">
                     </form>
                 </td>
                 <td>
                     <form name="f1" action="#" >
-                        <input id="join" type="submit" name="Join" value="Join">
+                        <input id="Ikut" type="submit" name="Ikut" value="Ikut">
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Jl. Demak No. 15 Surabaya</td>
+                <td>25 Juni 2023</td>
+                <td>10.00</td>
+                <td>
+                    <form name="f1" action="#" >
+                        <input id="detail" type="submit" name="Detail" value="Lihat Detail">
+                    </form>
+                </td>
+                <td>
+                    <form name="f1" action="#" >
+                        <input id="Ikut" type="submit" name="Ikut" value="Ikut">
                     </form>
                 </td>
             </tr>
             </table>
         </div>
         <div class="column">
-            <h3>Done</h3>
+            <h3>Telah selesai</h3>
             <table>
             <tr>
                 <th>ID</th>
@@ -106,7 +110,7 @@
                 <td>25 Juni 2023</td>
                 <td>
                     <form name="f1" action="#" >
-                        <input id="detail" type="submit" name="Detail" value="See Detail">
+                        <input id="detail" type="submit" name="Detail" value="Lihat Detail">
                     </form>
                 </td>
             </tr>
@@ -116,7 +120,7 @@
                 <td>25 Juni 2023</td>
                 <td>
                     <form name="f1" action="#" >
-                        <input id="detail" type="submit" name="Detail" value="See Detail">
+                        <input id="detail" type="submit" name="Detail" value="Lihat Detail">
                     </form>
                 </td>
             </tr>
@@ -126,7 +130,7 @@
                 <td>25 Juni 2023</td>
                 <td>
                     <form name="f1" action="#" >
-                        <input id="detail" type="submit" name="Detail" value="See Detail">
+                        <input id="detail" type="submit" name="Detail" value="Lihat Detail">
                     </form>
                 </td>
             </tr>
@@ -136,7 +140,7 @@
                 <td>25 Juni 2023</td>
                 <td>
                     <form name="f1" action="#" >
-                        <input id="detail" type="submit" name="Detail" value="See Detail">
+                        <input id="detail" type="submit" name="Detail" value="Lihat Detail">
                     </form>
                 </td>
             </tr>
@@ -146,7 +150,7 @@
                 <td>25 Juni 2023</td>
                 <td>
                     <form name="f1" action="#" >
-                        <input id="detail" type="submit" name="Detail" value="See Detail">
+                        <input id="detail" type="submit" name="Detail" value="Lihat Detail">
                     </form>
                 </td>
             </tr>
@@ -156,7 +160,7 @@
                 <td>25 Juni 2023</td>
                 <td>
                     <form name="f1" action="#" >
-                        <input id="detail" type="submit" name="Detail" value="See Detail">
+                        <input id="detail" type="submit" name="Detail" value="Lihat Detail">
                     </form>
                 </td>
             </tr>

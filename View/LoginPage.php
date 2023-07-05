@@ -20,7 +20,7 @@
 
             <div class="column right-column" style="background-color: #D9D9D9;">
             <br>
-            <h2><center>Hello there, <br> Welcome back!</center></h2>
+            <h2><center>Halo, <br> Selamat datang kembali!</center></h2>
             <h1><center>Login</center></h1>
             
             <?php
@@ -36,7 +36,7 @@
                 <label for="email">Email</label>
                 <input type="text" id="email" name="email" required value="<?php echo isset($_POST['email']) ? $_POST['email'] : ''; ?>">
                 <?php if (isset($errors) && !empty($errors) && in_array("Email does not exist", $errors)) {
-                    echo '<span class="error-message">Email does not exist</span>';
+                    echo '<span class="error-message">Email tidak ada!</span>';
                 }?><br>
 
                 <label for="password">Password</label>
@@ -45,14 +45,14 @@
                     <span class="password-toggle" onclick="togglePasswordVisibility()"><i class="fa fa-eye"></i></span>
                 </div>
                 <?php if (isset($errors) && !empty($errors) && in_array("Invalid password", $errors)) {
-                        echo '<span class="error-message">Invalid password</span>';
+                        echo '<span class="error-message">Password salah!</span>';
                     } ?>
                 <br><br>
                 <div class="submit-container">
                     <input type="submit" value="Login">
                 </div>
                 <div class="login-section">
-                    <p>Don't have account? <a href='../View/RegisterPage.php';>Register</a></p>
+                    <p>Belum punya akun? <a href='../View/RegisterPage.php';>Register</a></p>
                 </div>
             </form>
             </div>

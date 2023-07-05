@@ -1,5 +1,5 @@
 <?php
-require_once 'LocationDB.php';
+require_once '../Database/LocationDB.php';
 class Location
 {
     
@@ -66,7 +66,7 @@ class Location
     // ...
     public function getAllLocations()
     {
-        $query = "SELECT * FROM locations";
+        $query = "SELECT * FROM locations ORDER BY status";
         return $this->database->fetchAll($query);
     }
 
