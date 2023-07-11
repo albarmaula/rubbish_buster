@@ -1,5 +1,5 @@
 <?php
-require_once 'LocationDB.php';
+require_once '../Database/LocationDB.php';
 class Location
 {
     

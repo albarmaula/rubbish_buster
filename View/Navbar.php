@@ -32,7 +32,7 @@ if ($userController->isLoggedIn()) {
 <div class="navbar-links">
     <link rel="stylesheet" href="../css/styleberanda.css">
     <a class="nav-link" href="../View/Donasipage.php">Donasi</a>
-    <a class="nav-link" href="#post">Post</a>
+    <a class="nav-link" href="../View/Postpage.php">Post</a>
     <a class="nav-link" href="../View/VolunteerPage.php">Volunteer</a>
     <a class="nav-link" href="../View/Berandapage.php">Beranda</a>
 

@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 require_once(__DIR__."/../Model/User.php");
 //require_once(_DIR_ . "/../Model/User.php");
 
@@ -217,8 +219,27 @@ class UserController{
         // Tampilkan halaman profil
         include 'Profilepage.php';
     }
-
+    public function updateUser($username, $address, $email, $phoneNum) {
+        // Panggil metode updateUser pada UserModel untuk mengupdate data pengguna
+        if (isset($_POST['update'])) {
+            $username = $_POST['username'];
+            $address = $_POST['address'];
+            $email = $_POST['email'];
+            $phoneNum = $_POST['phone_num'];
+    
+            $result = $this->model->updateUser($email, $username, $address, $phoneNum);
+    
+            if ($result) {
+                // Update berhasil
+                echo "Profil berhasil diperbarui.";
+            } else {
+                // Gagal memperbarui
+                echo "Gagal memperbarui profil.";
+            }
+        }
+    }
 }
+
 
 $controller = new UserController();
 $controller->handleRequest();

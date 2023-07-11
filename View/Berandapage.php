@@ -1,13 +1,18 @@
 <?php
 require_once '../Model/Location.php';
 require_once '../Controller/LocationController.php';
+require_once '../Model/Volunteer.php';
+require_once '../Controller/VolunteerController.php';
 
 $action = $_GET['action'] ?? '';
 
 $locationsController = new LocationsController();
+$volunteerController = new VolunteerController();
 
-if ($action === 'save') {
+if ($action === 'saveLocation') {
     $locationsController->saveLocation();
+}else if ($action === 'saveActivity') {
+    $volunteersController->saveActivity();
 } else {
     // Get all locations from the database
     $locations = $locationsController->getAllApprovedLocations();
@@ -21,33 +26,7 @@ if ($action === 'save') {
   <link rel="stylesheet" href="../css/styleformlaporan.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" /> -->
-  <style>
-    .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 9998;
-    }
 
-    .popup-form {
-        text-align:center;
-        color: white; 
-        width: 400px;
-        background-color: #41644A;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    }
-    #map {
-        height: 400px;
-    }
-  </style>
 </head>
 <body>
   <div class="navbar">
@@ -90,7 +69,19 @@ if ($action === 'save') {
 
         // Add markers to the map
         <?php foreach ($locations as $location) : ?>
-        L.marker([<?= $location['latitude'] ?>, <?= $location['longitude'] ?>]).addTo(map);
+        var marker = L.marker([<?= $location['latitude'] ?>, <?= $location['longitude'] ?>])
+            .addTo(map)
+            .bindPopup("<b>Hai!</b><br />Ini adalah marker PopUp.");
+
+        // Event listener to show popup on mouseover
+        marker.on('mouseover', function(e) {
+        this.openPopup();
+        });
+
+        // Event listener to hide popup on mouseout
+        marker.on('mouseout', function(e) {
+        this.closePopup();
+        });
         <?php endforeach; ?>
 
         // Add markers to the map using OpenLayers
@@ -98,6 +89,8 @@ if ($action === 'save') {
         var marker = new ol.Feature({
             geometry: new ol.geom.Point(ol.proj.fromLonLat([<?= $location['longitude'] ?>, <?= $location['latitude'] ?>]))
         });
+
+        
 
         var iconStyle = new ol.style.Style({
             image: new ol.style.Icon({
@@ -107,6 +100,7 @@ if ($action === 'save') {
         });
 
         marker.setStyle(iconStyle);
+        
 
         var vectorSource = new ol.source.Vector({
             features: [marker]
@@ -142,8 +136,8 @@ if ($action === 'save') {
     <div class="popup-form">
         <h2>Laporan Sampah</h2>
         <!-- Add your form fields here -->
-        <form class="form" action="Berandapage.php?action=save" method="post" enctype="multipart/form-data">
-        <div class="form-group">
+        <form class="form" action="Berandapage.php?action=saveLocation" method="post" enctype="multipart/form-data">
+                <div class="form-group">
                     <label for="name">Nama:</label>
                     <input type="text" id="name" name="name" required>
                 </div>
@@ -155,16 +149,12 @@ if ($action === 'save') {
                 </div>
 
                 <div class="form-group">
-                    <label for="latitude">Latitude:</label>
-                    <input type="text" id="latitude" name="latitude" required>
+                        <label for="latitude">Koordinat: 
+                            <button class="btn" type="button" onclick="showMap()">Pilih Peta</button>
+                        </label>
+                        <input type="text" id="latitude" name="latitude" required>
+                        <input type="text" id="longitude" name="longitude" required>
                 </div>
-
-                <div class="form-group">
-                    <label for="longitude">Longitude:</label>
-                    <input type="text" id="longitude" name="longitude" required>
-                </div>
-
-                <button class="btn" type="button" onclick="showMap()">Pilih Peta</button>
 
                 <div class="form-group">
                     <label for="photo">Foto:</label>
@@ -176,6 +166,48 @@ if ($action === 'save') {
         </form>
         </div>
     </div>
+<!-- Volunteer__________________________________________________________________________________________________________ -->
+    <div class="overlay" id="formVolOverlay" style="display: none;">
+        <div class="popup-form">
+            <h2>Aktivitas Pembersihan</h2>
+            <!-- Add your form fields here -->
+            <form class="form" action="Berandapage.php?action=saveActivity" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="address">Alamat Pembersihan:</label>
+                        <input type="text" id="addressVol" name="address" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="latitude">Koordinat: 
+                            <button class="btn" type="button" onclick="showMap()">Pilih Peta</button>
+                        </label>
+                        <input type="text" id="latitudeVol" name="latitude" required>
+                        <input type="text" id="longitudeVol" name="longitude" required>
+                    </div>
+
+                    <!-- ///////////////////////benakno -->
+                    <div class="form-group">
+                        <label for="datetime">Tanggal dan Jam:</label>
+                        <input type="datetime-local" id="datetime" name="datetime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="desc">Deskripsi:</label>
+                        <textarea id="description" name="description" rows="4"></textarea>
+                    </div>
+                    <!-- ///////////////////// -->
+
+                    <div class="form-group">
+                        <label for="photo">Foto:</label>
+                        <input type="file" id="photoVol" name="photo" accept="image/*">
+                    </div>
+
+                    <button class="btn" type="button" onclick="closeFormVolunteer()">Batal</button>
+                    <button class="btn" type="submit">Simpan</button>
+            </form>
+            </div>
+        </div>
+
+<!-- Script_________________________________________________________________________- -->
 
     <div id="map-popup" class="map-popup" style="display: none; ">
         <div class="map-popup-content" style="background-color: #41644A;">
@@ -214,6 +246,8 @@ if ($action === 'save') {
 
                     document.getElementById('latitude').value = event.latlng.lat.toFixed(6);
                     document.getElementById('longitude').value = event.latlng.lng.toFixed(6);
+                    document.getElementById('latitudeVol').value = event.latlng.lat.toFixed(6);
+                    document.getElementById('longitudeVol').value = event.latlng.lng.toFixed(6);
                 });
             }, 100);
         }
@@ -250,125 +284,6 @@ if ($action === 'save') {
             }
         }
     </script>
-
-<!-- Volunteer__________________________________________________________________________________________________________ -->
-    <div class="overlay" id="formVolOverlay" style="display: none;">
-        <div class="popup-form">
-            <h2>Aktivitas Pembersihan</h2>
-            <!-- Add your form fields here -->
-            <form class="form" action="Berandapage.php?action=save" method="post" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="address">Alamat Pembersihan:</label>
-                        <input type="text" id="address" name="address" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="latitude">Latitude:</label>
-                        <input type="text" id="latitude" name="latitude" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="longitude">Longitude:</label>
-                        <input type="text" id="longitude" name="longitude" required>
-                    </div>
-
-                    <button class="btn" type="button" onclick="showMap()">Pilih Peta</button>
-
-                    <!-- ///////////////////////benakno -->
-                    <div class="form-group">
-                        <label for="address">Tanggal dan Jam:</label>
-                        <input type="text" id="address" name="address" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="address">Deskripsi:</label>
-                        <input type="text" id="address" name="address" required>
-                    </div>
-                    <!-- ///////////////////// -->
-
-                    <div class="form-group">
-                        <label for="photo">Foto:</label>
-                        <input type="file" id="photo" name="photo" accept="image/*">
-                    </div>
-
-                    <button class="btn" type="button" onclick="closeFormVolunteer()">Batal</button>
-                    <button class="btn" type="submit">Simpan</button>
-            </form>
-            </div>
-        </div>
-
-        <div id="map-popup" class="map-popup" style="display: none; ">
-            <div class="map-popup-content" style="background-color: #41644A;">
-                <div id="map-popup-map" class="map"></div><br>
-                <input type="text" id="search-input" placeholder="Search">
-                <button class="btn" onclick="searchLocation()">Search</button>
-                <button class="btn" onclick="closeMap()">Close</button>
-            </div>
-        </div>
-        <!-- <button onclick="showMap()">Open Map</button> -->
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
-        <script>
-            var map;
-            var marker;
-            var mapPopup = document.getElementById('map-popup');
-            var searchInput = document.getElementById('search-input');
-
-            function showMap() {
-                mapPopup.style.display = 'block';
-
-                setTimeout(function() {
-                    map = L.map('map-popup-map').setView([-7.2575, 112.7521], 13);
-
-                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-                        maxZoom: 18
-                    }).addTo(map);
-
-                    map.on('click', function(event) {
-                        if (marker) {
-                            map.removeLayer(marker);
-                        }
-
-                        marker = L.marker(event.latlng).addTo(map);
-
-                        document.getElementById('latitude').value = event.latlng.lat.toFixed(6);
-                        document.getElementById('longitude').value = event.latlng.lng.toFixed(6);
-                    });
-                }, 100);
-            }
-
-            function closeMap() {
-                mapPopup.style.display = 'none';
-                map.remove();
-            }
-
-            function searchLocation() {
-                var query = searchInput.value;
-
-                if (query) {
-                    var url = 'https://nominatim.openstreetmap.org/search?q=' + query + '&format=json&addressdetails=1&limit=1';
-
-                    fetch(url)
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.length > 0) {
-                                var lat = data[0].lat;
-                                var lon = data[0].lon;
-
-                                if (marker) {
-                                    map.removeLayer(marker);
-                                }
-
-                                marker = L.marker([lat, lon]).addTo(map);
-                                map.setView([lat, lon], 13);
-                            }
-                        })
-                        .catch(error => {
-                            console.log('Error:', error);
-                        });
-                }
-            }
-        </script>
 
 </body>
 </html>
