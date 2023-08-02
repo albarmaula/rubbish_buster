@@ -1,4 +1,7 @@
 <?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 class LocationsController
 {
     private $location;
@@ -9,29 +12,30 @@ class LocationsController
     }
 
     public function saveLocation()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $name = $_POST['name'];
-            $address = $_POST['address'];
-            $latitude = $_POST['latitude'];
-            $longitude = $_POST['longitude'];
-    
-            // Upload and save the photo
-            $photo = $_FILES['photo'];
-    
-            $photoPath = $this->uploadPhoto($photo);
-            if ($photoPath !== null) {
-                $photoName = $photo['name'];
-                $this->location->saveLocation($name, $address, $latitude, $longitude, $photoName);
-    
-                // Redirect to homepage or any other page
-                header('Location: Berandapage.php');
-                exit();
-            } else {
-                echo "Failed to upload photo.";
-            }
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $username = $_SESSION['username'];
+        $address = $_POST['address'];
+        $latitude = $_POST['latitude'];
+        $longitude = $_POST['longitude'];
+
+        // Upload and save the photo
+        $photo = $_FILES['photo'];
+
+        $photoPath = $this->uploadPhoto($photo);
+        if ($photoPath !== null) {
+            $photoName = $photo['name'];
+            // Update the $username variable with the session username
+            $this->location->saveLocation($username, $address, $latitude, $longitude, $photoName);
+
+            // Redirect to homepage or any other page
+            header('Location: Berandapage.php');
+            exit();
+        } else {
+            echo "Failed to upload photo.";
         }
     }
+}
     
     private function uploadPhoto($photo)
     {
@@ -81,7 +85,10 @@ class LocationsController
     {
         return $this->location->getAllLocations();
     }
-
+    public function getHistoryReport()
+    {
+        return $this->location->getHistoryReport();
+    }
     public function getAllApprovedLocations()
     {
     return $this->location->getAllApprovedLocations();

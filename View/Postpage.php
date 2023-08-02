@@ -73,9 +73,9 @@ if (isset($_GET['error'])) {
   <link rel="stylesheet" href="../css/stylepost.css">
 </head>
 <body>
-  <div class="navbar">
+<div class="navbar">
     <?php include(__DIR__ . "/navbar.php"); ?>
-  </div><br><br>
+  </div>
   <div id="post-container" class="post-container">
       <?php
       // Mengimpor file model yang diperlukan
@@ -91,35 +91,30 @@ if (isset($_GET['error'])) {
 // ...
 foreach ($posts as $post) {
     echo '<div class="post-item">';
-    echo '<h3>' . $post['email'] . '</h3> <br>';
     echo '<img src="../post/' . $post['image_name'] . '" alt="Post Image">';
     echo '<h3>' . $post['title'] . '</h3>';
     echo '<p>' . $post['content'] . '</p>';
-
-    // Tampilkan komentar
-    $comments = $commentModel->getCommentsByPostId($post['id']);
-    echo '<h4>Komentar: </h4>';
-    echo '<div class="comments">';
-    foreach ($comments as $comment) {
-        echo '<div class="comment">';
-        echo '<div class="comment-user">' . $comment['email'] . '</div>';
-        echo '<div class="comment-content">' . $comment['content'] . '</div>';
-        echo '<div class="comment-date">' . $comment['created_at'] . '</div>';
-        echo '</div>';
-    }
-    echo '</div>';
 
     // Form komentar
     echo '<form class="comment-form" method="POST" action="Postpage.php">';
     echo '<input type="hidden" name="post_id" value="' . $post['id'] . '">';
     echo '<input type="hidden" name="email" value="' . $email . '">';
-    echo '<textarea name="content" placeholder="Tambahkan komentar" required></textarea>';
+    echo '<textarea name="content" placeholder="Tambahkan komentar"></textarea>';
     echo '<button type="submit">Kirim</button>';
     echo '</form>';
 
+    // Tampilkan komentar
+    echo '<div class="comments">';
+    $comments = $commentModel->getCommentsByPostId($post['id']);
+    foreach ($comments as $comment) {
+        echo '<div class="comment">';
+        echo '<p>' . $comment['content'] . '</p>';
+        echo '</div>';
+    }
+    echo '</div>';
+
     echo '</div>';
 }
-
 // ...
       ?>
 
@@ -149,11 +144,5 @@ foreach ($posts as $post) {
     </form>
   </div>
   <script src="../js/post.js"></script>
-
-  <div class="footer">
-    <p>Hak Cipta &copy; 2023 Rubbish Buster. Semua hak dilindungi.</p>
-    <p>Kontak: info@rubbishbuster.com | Telepon: 0856-4849-9655</p>
-  </div>
 </body>
-</html>
 </html>

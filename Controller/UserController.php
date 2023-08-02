@@ -103,6 +103,7 @@ class UserController{
                                 // Set session variables or tokens to maintain user authentication
                                 // Redirect the user to the appropriate page
                                 $_SESSION['email'] = $email;
+                                $_SESSION['username'] = $user['username'];
                                 require '../View/BerandaPage.php';
                             } else {
                                 // Password verification failed

@@ -1,4 +1,7 @@
 <?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 require_once '../Database/LocationDB.php';
 class Location
 {
@@ -64,6 +67,17 @@ class Location
     }
 
     // ...
+    public function getHistoryReport()
+    {
+        // Pastikan session telah dimulai sebelum mengakses $_SESSION
+        $username = $_SESSION['username'];
+
+        // Gunakan query untuk mengambil data lokasi berdasarkan nama pengguna yang sedang login
+        $query = "SELECT * FROM locations WHERE name = '$username' ORDER BY status";
+
+        return $this->database->fetchAll($query);
+    }
+
     public function getAllLocations()
     {
         $query = "SELECT * FROM locations ORDER BY status";

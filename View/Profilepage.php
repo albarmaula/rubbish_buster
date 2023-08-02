@@ -88,7 +88,7 @@ if (isset($_POST['update'])) {
 						</a>
 						<a class="nav-link" id="application-tab" data-toggle="pill" href="#application" role="tab" aria-controls="application" aria-selected="false">
 							<i class="fa fa-tv text-center mr-1"></i> 
-							Application
+							Riwayat Pelaporan
 						</a>
 						<a class="nav-link" id="notification-tab" data-toggle="pill" href="#notification" role="tab" aria-controls="notification" aria-selected="false">
 							<i class="fa fa-bell text-center mr-1"></i> 
@@ -199,29 +199,80 @@ if (isset($_POST['update'])) {
 						</div>
 					</div>
 					<div class="tab-pane fade" id="application" role="tabpanel" aria-labelledby="application-tab">
-						<h3 class="mb-4">Application Settings</h3>
-						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" value="" id="app-check">
-										<label class="form-check-label" for="app-check">
-										App check
-										</label>
-									</div>
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" value="" id="defaultCheck2" >
-										<label class="form-check-label" for="defaultCheck2">
-										Lorem ipsum dolor sit.
-										</label>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div>
-							<button class="btn btn-primary">Update</button>
-							<button class="btn btn-light">Cancel</button>
-						</div>
+					<?php
+						require_once '../Model/Location.php';
+						require_once '../Controller/LocationController.php';
+
+						$locationsController = new LocationsController();
+
+						if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_location'])) {
+							$locationId = $_POST['location_id'];
+							$locationsController->deleteItem($locationId);
+						}
+
+						if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+							// Update location status when admin approves or rejects
+							$locationId = $_POST['location_id'];
+							$status = $_POST['status'];
+							$locationsController->updateLocationStatus($locationId, $status);
+						}
+
+						$locations = $locationsController-> getHistoryReport();
+
+						if (!empty($locations)) {
+							echo '<table>';
+							echo '<tr>';
+							echo '<th>Nama</th>';
+							echo '<th>Alamat</th>';
+							echo '<th>Foto</th>';
+							echo '<th>Status</th>';
+							echo '<th>Hapus</th>';
+							echo '</tr>';
+
+							foreach ($locations as $location) {
+								echo '<tr>';
+								echo '<td>' . $location['name'] . '</td>';
+								echo '<td>' . $location['address'] . '</td>';
+
+								$image = $location['photo_path'];
+								$image_src = "../image/".$image;
+
+								if (isset($image) && file_exists($image_src)) {
+									echo '<td><img src="' . $image_src . '" alt="Foto Lokasi" style="width: 100px;"></td>';
+								} else {
+									echo '<td>Tidak ada foto.</td>';
+								}
+
+								echo '<td>' . $location['status'] . '</td>';
+
+								if ($location['status'] === 'pending') {
+									echo '<td>';
+									echo '<form method="post" action="">';
+									echo '<input type="hidden" name="location_id" value="' . $location['id'] . '">';
+									echo '<select name="status">';
+									echo '</select>';
+									echo '<button class="btn" type="submit">Submit</button>';
+									echo '</form>';
+									echo '</td>';
+								} else {
+									echo '<td>-</td>';
+								}
+
+								echo '<td>';
+								echo '<form method="post" action="">';
+								echo '<input type="hidden" name="location_id" value="' . $location['id'] . '">';
+								echo '<button class="btn btn-danger" type="submit" name="delete_location">Hapus</button>';
+								echo '</form>';
+								echo '</td>';
+
+								echo '</tr>';
+							}
+
+							echo '</table>';
+						} else {
+							echo '<p>Tidak ada lokasi ditemukan.</p>';
+						}
+						?>
 					</div>
 					<div class="tab-pane fade" id="notification" role="tabpanel" aria-labelledby="notification-tab">
 						<h3 class="mb-4">Notification Settings</h3>
